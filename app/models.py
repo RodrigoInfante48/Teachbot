@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Any, Literal, Optional
+from typing import Literal, Optional
 
 
 class TextContent(BaseModel):
@@ -82,10 +82,10 @@ class GeminiInput(BaseModel):
 
 class AppendToNotionRequest(BaseModel):
     page_id: str = Field(..., description="Notion page ID to append blocks to")
-    blocks: list[Block] = Field(..., description="List of blocks to append")
+    gemini_json: GeminiInput = Field(..., description="Gemini output containing sections array")
 
 
 class AppendToNotionResponse(BaseModel):
     success: bool
-    appended_count: int
-    results: list[dict[str, Any]]
+    blocks_added: int
+    page_url: str
