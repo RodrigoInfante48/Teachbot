@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Any, Literal
+from typing import Any, Literal, Optional
 
 
 class TextContent(BaseModel):
@@ -64,6 +64,20 @@ Block = (
     | DividerBlock
     | CalloutBlock
 )
+
+
+class GeminiSection(BaseModel):
+    type: Literal[
+        "heading_1", "heading_2", "heading_3",
+        "paragraph", "bulleted_list", "numbered_list",
+        "divider", "callout",
+    ]
+    content: Optional[str] = None
+    items: Optional[list[str]] = None
+
+
+class GeminiInput(BaseModel):
+    sections: list[GeminiSection]
 
 
 class AppendToNotionRequest(BaseModel):
